@@ -3,11 +3,11 @@ ffmpeg自己下载对应的系统版本
 ---
 ```
 目录树
--91porny
---Settings
----ffmpeg
---91porny.py
---requirements.txt
+91porny
+>Settings
+>>ffmpeg
+>91porny.py
+>requirements.txt
 
 
 使用方法：
