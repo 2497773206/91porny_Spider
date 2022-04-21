@@ -81,6 +81,7 @@ if __name__ == '__main__':
     zone = input('请输入爬取模式：')
     if int(zone) == 1:
         file = open("download_info.txt", 'w').close()
+        file1 = open("userurl.txt", 'w').close()
         user_url()
         print('爬取完毕')
     elif int(zone) == 2:
