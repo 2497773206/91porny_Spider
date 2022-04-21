@@ -39,13 +39,23 @@ def user(url):
         path = os.getcwd() + '/Settings/./ffmpeg -y -i ' + data_src.replace('&','\'&\'') + ' -vcodec copy -acodec copy -absf aac_adtstoasc ' + userPath + '/' + title + '.mp4'
         download_m3u8(path)
         with open(os.getcwd() + "/download_info.txt","a",encoding='utf-8') as f:
-            f.write(userPath + title + '.mp4' + '\n')
+            f.write(userPath + '/' + title + '.mp4' + '\n')
 
 def download_m3u8(path):
     print(path)
     os.system(path)
 
-def enter():
+def user_url():
+    path = r"userurl.txt"
+    file = open(path,"r",encoding="utf-8",errors="ignore")
+    while True:
+        mystr = file.readline()#表示一次读取一行
+        if not mystr:
+            break
+        url = mystr
+        enter(url)
+
+def enter(url):
     end = int(getpage(url)[1]) + 1
     for page in range(1, end):
         url_page = url + '?page=' + str(page)
@@ -67,6 +77,14 @@ def getpage(url):
         return user_name, page_page
 
 if __name__ == '__main__':
-    url = input('请输入需要爬取的链接：')
-    enter()
-    print('爬取完毕')
+    print('1、文件爬取   2、手动爬取')
+    zone = input('请输入爬取模式：')
+    if int(zone) == 1:
+        file = open("download_info.txt", 'w').close()
+        user_url()
+        print('爬取完毕')
+    elif int(zone) == 2:
+        file = open("download_info.txt", 'w').close()
+        url = input('请输入需要爬取的链接：')
+        enter(url)
+        print('爬取完毕')
