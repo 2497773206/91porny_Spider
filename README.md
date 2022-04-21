@@ -7,6 +7,7 @@ ffmpeg自己下载对应的系统版本
 >Settings
 >>ffmpeg
 >91porny.py
+>userurl.txt
 >requirements.txt
 
 
