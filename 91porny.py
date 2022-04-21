@@ -40,7 +40,7 @@ def user(url):
         else:
             view_video = view_bs.select_one("#videoShowPage video")
             data_src = view_video.attrs["data-src"]
-            path = os.getcwd() + '/Settings/./ffmpeg -y -i ' + data_src.replace('&','\'&\'') + ' -vcodec copy -acodec copy -absf aac_adtstoasc ' + os.getcwd() + '/Videos/' + userName + '/' + title + '.mp4'
+            path = os.getcwd() + '/Settings/./ffmpeg -y -i ' + data_src.replace('&','\'&\'') + ' -vcodec copy -acodec copy -absf aac_adtstoasc ' + userPath + '/' + title + '.mp4'
             download_m3u8(path)
             with open(os.getcwd() + "/download_info.txt","a",encoding='utf-8') as f:
                 f.write(userPath + '/' + title + '.mp4' + '\n')
