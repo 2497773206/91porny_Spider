@@ -20,7 +20,7 @@ class WebDriver:
 
 def user(url):
     userName = getpage(url)[0]
-    userPath = '/data/Videos/' + userName#保存位置更改位置
+    userPath = os.getcwd() + '/Videos/' + userName
     if os.path.exists(userPath):
         pass
     else:
@@ -31,15 +31,19 @@ def user(url):
     colVideoList = bs.find_all(attrs={'class':'text-truncate title text-sub-title mt-2'})
     for list in colVideoList:
         title = list.text
-        view_url = URL + list.attrs['href']
+        view_url = 'https://0ksy5j.jiuse710.com' + list.attrs['href']
         view = web.get(view_url)
         view_bs = BeautifulSoup(view.text, 'lxml')
-        view_video = view_bs.select_one("#videoShowPage video")
-        data_src = view_video.attrs["data-src"]
-        path = os.getcwd() + '/Settings/./ffmpeg -y -i ' + data_src.replace('&','\'&\'') + ' -vcodec copy -acodec copy -absf aac_adtstoasc ' + userPath + '/' + title + '.mp4'
-        download_m3u8(path)
-        with open(os.getcwd() + "/download_info.txt","a",encoding='utf-8') as f:
-            f.write(userPath + '/' + title + '.mp4' + '\n')
+        print(view_bs.title.string)
+        if view_bs.title.string == '视频因版权原因已被删除':
+            pass
+        else:
+            view_video = view_bs.select_one("#videoShowPage video")
+            data_src = view_video.attrs["data-src"]
+            path = os.getcwd() + '/Settings/./ffmpeg -y -i ' + data_src.replace('&','\'&\'') + ' -vcodec copy -acodec copy -absf aac_adtstoasc ' + os.getcwd() + '/Videos/' + userName + '/' + title + '.mp4'
+            download_m3u8(path)
+            with open(os.getcwd() + "/download_info.txt","a",encoding='utf-8') as f:
+                f.write(userPath + '/' + title + '.mp4' + '\n')
 
 def download_m3u8(path):
     print(path)
