@@ -20,7 +20,7 @@ class WebDriver:
 
 def user(url):
     userName = getpage(url)[0]
-    userPath = os.getcwd() + '/Videos/' + userName
+    userPath = '/data/Videos/91porny/' + userName
     if os.path.exists(userPath):
         pass
     else:
