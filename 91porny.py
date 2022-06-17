@@ -2,8 +2,9 @@
 import os, time, re, random, requests, urllib3
 from bs4 import BeautifulSoup
 
-URL = 'https://0ksy5j.jiuse710.com'#免翻地址更改位置
-cookie = 'PHPSESSID=11054ff48d7f42812082f048303950e9;'
+URL = 'https://0ksy5j.jiuse710.com'#免翻地址
+cookie = 'PHPSESSID=ee7d416eab164a7a8cf23d24159905c7;'#更新cookie
+localPath = '/data2/Videos/91porny/'#保存路径（确保存在该路径）
 
 class WebDriver:
     def __init__(self, is_proxy):
@@ -25,7 +26,7 @@ class WebDriver:
 
 def get_user_scr(url):
     userName = get_page_src(url)[0]
-    userPath = '/data/Videos/91porny/' + userName
+    userPath = localPath + userName
     if os.path.exists(userPath):
         pass
     else:
@@ -36,7 +37,7 @@ def get_user_scr(url):
     colVideoList = bs.find_all(attrs={'class':'text-truncate title text-sub-title mt-2'})
     for list in colVideoList:
         title = list.text.replace(':','').replace('(','[').replace(')',']').replace('（','[').replace('）',']').replace('“','[').replace('”',']').replace('/','').replace('"','').replace(' ','')
-        view_url = 'https://0ksy5j.jiuse710.com' + list.attrs['href']
+        view_url = URL + list.attrs['href']
         videoName = userPath + '/' + title + '.mp4'
         if os.path.exists(videoName):
             print('目录下已存在相同文件:' + userName + '/' +  title)
@@ -59,7 +60,7 @@ def get_user_scr(url):
 
 def get_updata_scr(url):
     userName = get_page_src(url)[0]
-    userPath = '/data/Videos/91porny/' + userName
+    userPath = localPath + userName
     if os.path.exists(userPath):
         pass
     else:
@@ -68,10 +69,10 @@ def get_updata_scr(url):
     resp = web.get(url)
     bs = BeautifulSoup(resp.text, 'lxml')
     colVideoList = bs.find_all(attrs={'class':'text-truncate title text-sub-title mt-2'})
-    videoSrc = colVideoList[:10]#需要下载视频的数量
+    videoSrc = colVideoList[:15]#需要下载视频的数量
     for list in videoSrc:
         title = list.text.replace(':','').replace('(','[').replace(')',']').replace('（','[').replace('）',']').replace('“','[').replace('”',']').replace('/','').replace('"','').replace(' ','')
-        view_url = 'https://0ksy5j.jiuse710.com' + list.attrs['href']
+        view_url = URL + list.attrs['href']
         videoName = userPath + '/' + title + '.mp4'
         if os.path.exists(videoName):
             print('目录下已存在相同文件:' + userName + '/' +  title)
@@ -137,7 +138,7 @@ def get_page_src(url):
         return user_name, page_page
 
 if __name__ == '__main__':
-    print('1、文件爬取   2、手动爬取   3、更新第一页')
+    print('1、批量爬取   2、单独爬取   3、更新视频')
     zone = input('请输入爬取模式：')
     if int(zone) == 1:
         file = open("download_info.txt", 'w').close()
@@ -153,4 +154,5 @@ if __name__ == '__main__':
         file = open("download_info.txt", 'w').close()
         updata_url()
         print('爬取完毕')
+
 
