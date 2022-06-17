@@ -8,7 +8,7 @@ ffmpeg自己下载对应的系统版本
 --ffmpeg
 -91porny.py
 -userurl.txt
--userdata.txt
+-updata.txt
 -requirements.txt
 
 
