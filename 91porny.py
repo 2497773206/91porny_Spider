@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os, time, re, random, requests, urllib3
 from bs4 import BeautifulSoup
+from faker import Faker
 
 URL = 'https://0ksy5j.jiuse710.com'#免翻地址
 cookie = 'PHPSESSID=ee7d416eab164a7a8cf23d24159905c7;'#更新cookie
@@ -11,7 +12,7 @@ class WebDriver:
         self.session = requests.session()
         self.isProxy = is_proxy
         self.head = {
-            'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36',
+            'user-agent':fakeua.chrome(),
             'accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'accept-encoding':'gzip, deflate, br',
             'accept-language':'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
@@ -21,6 +22,7 @@ class WebDriver:
         }
         requests.packages.urllib3.disable_warnings()
     def get(self, url):
+        time.sleep(0.5)
         return self.session.get(url, timeout=15, headers=self.head, verify=False)
     
 
